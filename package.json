@@ -1,0 +1,26 @@
+{
+  "name": "tally_ho",
+  "version": "0.0.0",
+  "description": "Async as sync + events. Not ready for use.",
+  "main": "lib/tally_ho.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/da99/tally_ho.git"
+  },
+  "keywords": [
+    "da99"
+  ],
+  "dependencies" : {
+    "underscore" : "x.x.x"
+  },
+  "author": "da99",
+  "license": "MIT",
+  "readmeFilename": "README.md",
+  "gitHead": "f6a1a7e5f9f5a49775dfc803f66a5446e312fb20"
+}
