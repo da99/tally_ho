@@ -1,8 +1,7 @@
 
-var _ = require("underscore")._,
-assert = require("assert"),
-
-Tally_Ho = require("../lib/tally_ho").Tally_Ho
+var _    = require("underscore")._,
+assert   = require("assert"),
+Tally_Ho = require("../lib/tally_ho").Tally_Ho.new()
 ;
 
 Tally_Ho.on('add', function (o) {
