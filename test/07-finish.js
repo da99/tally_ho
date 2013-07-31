@@ -35,9 +35,11 @@ describe( 'finish', function () {
 
   it( 'throws error if called more than once', function () {
     Two.on('finish 2', function (o) {
-      o.finish();
-      o.finish();
+      o.finish(1);
+      o.finish(2);
     });
+
+    Two.on('finish 2', function (o) { });
 
     var err = null
 
