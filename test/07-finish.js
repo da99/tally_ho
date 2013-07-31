@@ -33,4 +33,21 @@ describe( 'finish', function () {
     });
   });
 
+  it( 'throws error if called more than once', function () {
+    Two.on('finish 2', function (o) {
+      o.finish();
+      o.finish();
+    });
+
+    var err = null
+
+    try {
+      Two.emit('finish 2');
+    } catch (e) {
+      err = e;
+    }
+
+    assert.equal(err.message.indexOf(".finish called more than once"), 0);
+  });
+
 }); // === end desc
