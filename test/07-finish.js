@@ -33,6 +33,25 @@ describe( 'finish', function () {
     });
   });
 
+  it( 'throws error if Run is done', function () {
+    Two.on('finish run', function (o) {
+      o.run.is_done = true;
+      return o.finish(1);
+    });
+
+    Two.on('finish run', function (o) { return o.finish(2); });
+
+    var err = null
+
+    try {
+      Two.emit('finish run');
+    } catch (e) {
+      err = e;
+    }
+
+    assert.equal(err.message.indexOf(".finish called more than once"), 0);
+  });
+
   it( 'throws error if called more than once', function () {
     Two.on('finish 2', function (o) {
       o.finish(1);
