@@ -15,7 +15,7 @@ Tally_Ho.on('add', function (o) {
 });
 
 Tally_Ho.on('mult', 'div', function (o) {
-  o.data.result.push(o.run.names);
+  o.data.result.push(o.run.proc_list[0]);
   o.finish();
 });
 
@@ -24,7 +24,7 @@ describe( 'Tally_Ho', function () {
 
   it( 'runs events in defined order', function (done) {
     process.nextTick(function () {
-      Tally_Ho.emit('add', {result: []}, function (o) {
+      Tally_Ho.run('add', {result: []}, function (o) {
         assert.deepEqual( o.data.result, [1,2]);
         done();
       })
@@ -33,12 +33,12 @@ describe( 'Tally_Ho', function () {
 
   it( 'runs on multi-defined events', function (done) {
     process.nextTick(function () {
-      Tally_Ho.emit('mult', {result: []}, function (o) {
-        assert.deepEqual( o.data.result, [['mult']]);
+      Tally_Ho.run('mult', {result: []}, function (o) {
+        assert.deepEqual( o.data.result, ['mult']);
       })
 
-      Tally_Ho.emit('div', {result: []}, function (o) {
-        assert.deepEqual( o.data.result, [['div']]);
+      Tally_Ho.run('div', {result: []}, function (o) {
+        assert.deepEqual( o.data.result, ['div']);
         done();
       })
     });

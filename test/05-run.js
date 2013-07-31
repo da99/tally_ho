@@ -29,7 +29,7 @@ describe( 'run', function () {
      );
     });
 
-    One.emit('finishes parent');
+    One.run('finishes parent');
 
     assert.deepEqual(d, [1,2,3]);
   });

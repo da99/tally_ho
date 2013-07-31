@@ -10,10 +10,9 @@ describe( 'val', function () {
     var v = 0;
 
     One.on('one', function (o) { o.finish(1); });
-
     One.on('after one', function (o) { o.finish(); });
 
-    One.emit('one', function (o) { v = o.val; });
+    One.run('one', function (o) { v = o.val; });
 
     assert.equal(v, 1);
   });

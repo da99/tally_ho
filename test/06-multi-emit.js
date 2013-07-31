@@ -21,17 +21,17 @@ One.on('after two', function (o) {
   o.finish();
 });
 
-describe( 'multi emit', function () {
+describe( 'multi run', function () {
 
   it( 'runs functions in sequential order', function () {
     var o = {l : []};
-    One.emit('one', 'two', o);
+    One.run('one', 'two', o);
     assert.deepEqual(o.l, [1,2,3]);
   });
 
   it( 'runs last callback at end', function () {
     var o = {l : []};
-    One.emit('one', 'two', o, function (o) {
+    One.run('one', 'two', o, function (o) {
       o.data.l.push('4')
       o.finish();
     });

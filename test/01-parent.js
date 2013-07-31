@@ -8,17 +8,17 @@ var _      = require("underscore")._
 
 First.on('add', function (o) {
   o.data.result.push('add');
-  First.emit(o, 'sub', o.data);
+  First.run(o, 'sub', o.data);
 });
 
 First.on('sub', function (o) {
   o.data.result.push('sub');
-  Sec.emit(o, 'multi', o.data);
+  Sec.run(o, 'multi', o.data);
 });
 
 Sec.on('multi', function (o) {
   o.data.result.push('multi');
-  Sec.emit(o, 'div', o.data);
+  Sec.run(o, 'div', o.data);
 });
 
 Sec.on('div', function (o) {
@@ -31,7 +31,7 @@ describe( 'parent', function () {
   it( 'runs last callback after nested children are finished', function (done) {
     process.nextTick(function () {
       var o = {result: []};
-      First.emit('add', o, function () {
+      First.run('add', o, function () {
         assert.deepEqual(o.result, ['add', 'sub', 'multi', 'div']);
         done();
       });

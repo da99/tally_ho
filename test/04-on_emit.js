@@ -6,19 +6,19 @@ var _      = require("underscore")._
   , Third  = require("../lib/tally_ho").Tally_Ho.new()
 ;
 
-TH.on('parent emit', function (o) {
-  o.data.result.push('parent emit');
+TH.on('parent run', function (o) {
+  o.data.result.push('parent run');
   o.finish();
 });
 
 TH.on('add', function (o) {
   o.data.result.push('add');
-  H.emit(o, 'sub', o.data);
+  H.run(o, 'sub', o.data);
 });
 
 H.on('sub', function (o) {
   o.data.result.push('sub');
-  H.emit(o, 'div', o.data);
+  H.run(o, 'div', o.data);
 });
 
 H.on('div', function (o) {
@@ -26,13 +26,13 @@ H.on('div', function (o) {
   o.finish();
 });
 
-describe( 'parent emit', function () {
+describe( 'parent run', function () {
 
   it( 'runs function only once', function (done) {
     process.nextTick(function () {
       var o = {result: []};
-      TH.emit('add', o, function () {
-        assert.deepEqual(o.result, ['parent emit', 'add', 'sub', 'div']);
+      TH.run('add', o, function () {
+        assert.deepEqual(o.result, ['parent run', 'add', 'sub', 'div']);
         done();
       });
     });

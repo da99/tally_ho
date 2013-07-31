@@ -34,7 +34,7 @@ describe( 'hooks', function () {
 
   it( 'runs hooks in defined order', function (done) {
     process.nextTick(function () {
-      TH.emit('add', {result: []}, function (o) {
+      TH.run('add', {result: []}, function (o) {
         assert.deepEqual( o.data.result, [1,2,3,4,5]);
         done();
       })

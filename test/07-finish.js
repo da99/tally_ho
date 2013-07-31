@@ -23,10 +23,10 @@ describe( 'finish', function () {
 
   it( 'saves last value', function (done) {
     process.nextTick(function (){
-      One.emit('one', function (o) {
+      One.run('one', function (o) {
         assert.equal(o.last, 1);
       });
-      One.emit('two', function (o) {
+      One.run('two', function (o) {
         assert.equal(o.last, 3);
         done();
       });
@@ -44,7 +44,7 @@ describe( 'finish', function () {
     var err = null
 
     try {
-      Two.emit('finish run');
+      Two.run('finish run');
     } catch (e) {
       err = e;
     }
@@ -63,7 +63,7 @@ describe( 'finish', function () {
     var err = null
 
     try {
-      Two.emit('finish 2');
+      Two.run('finish 2');
     } catch (e) {
       err = e;
     }

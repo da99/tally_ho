@@ -14,7 +14,7 @@ Tally_Ho.on('subtract', function (o) {
 });
 
 Tally_Ho.on('raise nested err', function (o) {
-  Ho.emit(o, 'nested', {});
+  Ho.run(o, 'nested', {});
 });
 
 Ho.on('nested', function (o) {
@@ -25,13 +25,13 @@ describe( '.on_error', function () {
 
   it( 'runs error handler', function () {
     var o = {result: []};
-    Tally_Ho.emit('subtract', o);
+    Tally_Ho.run('subtract', o);
     assert.deepEqual( o.result, [1]);
   });
 
   it( 'catches errors bubbled up from nested flows', function () {
     var o = {result: []};
-    Tally_Ho.emit('raise nested err', o);
+    Tally_Ho.run('raise nested err', o);
     assert.deepEqual( o.result, [2]);
   });
 
