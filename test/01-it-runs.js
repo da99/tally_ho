@@ -15,7 +15,7 @@ Tally_Ho.on('add', function (o) {
 });
 
 Tally_Ho.on('mult', 'div', function (o) {
-  o.data.result.push(o.run.event_name);
+  o.data.result.push(o.run.names);
   o.finish();
 });
 
@@ -34,11 +34,11 @@ describe( 'Tally_Ho', function () {
   it( 'runs on multi-defined events', function (done) {
     process.nextTick(function () {
       Tally_Ho.emit('mult', {result: []}, function (o) {
-        assert.deepEqual( o.data.result, ['mult']);
+        assert.deepEqual( o.data.result, [['mult']]);
       })
 
       Tally_Ho.emit('div', {result: []}, function (o) {
-        assert.deepEqual( o.data.result, ['div']);
+        assert.deepEqual( o.data.result, [['div']]);
         done();
       })
     });

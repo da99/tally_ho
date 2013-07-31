@@ -7,22 +7,22 @@ var _      = require("underscore")._
 
 
 First.on('add', function (o) {
-  o.data.result.push(o.run.event_name);
+  o.data.result.push('add');
   First.emit(o, 'sub', o.data);
 });
 
 First.on('sub', function (o) {
-  o.data.result.push(o.run.event_name);
+  o.data.result.push('sub');
   Sec.emit(o, 'multi', o.data);
 });
 
 Sec.on('multi', function (o) {
-  o.data.result.push(o.run.event_name);
+  o.data.result.push('multi');
   Sec.emit(o, 'div', o.data);
 });
 
 Sec.on('div', function (o) {
-  o.data.result.push(o.run.event_name);
+  o.data.result.push('div');
   o.finish();
 });
 

@@ -12,17 +12,17 @@ TH.on('parent emit', function (o) {
 });
 
 TH.on('add', function (o) {
-  o.data.result.push(o.run.event_name);
+  o.data.result.push('add');
   H.emit(o, 'sub', o.data);
 });
 
 H.on('sub', function (o) {
-  o.data.result.push(o.run.event_name);
+  o.data.result.push('sub');
   H.emit(o, 'div', o.data);
 });
 
 H.on('div', function (o) {
-  o.data.result.push(o.run.event_name);
+  o.data.result.push('div');
   o.finish();
 });
 
