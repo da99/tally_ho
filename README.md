@@ -68,8 +68,26 @@ New Scope
 
     my_flow.run("add", "subtract", {a: 1, b: 2});
 
+Passing and Updating Data Among Callbacks
+--------------------------
 
+You can pass a data objects (ie `{my\_key: val}`) on
+your runs. You can also pass multiple objects.
+Each object will be "merged" into the first one you pass:
 
+    var my_flow = F.new();
+
+    my_flow.on('multi-merge', function (f) {
+      f.data.a // --> 1
+      f.data.b // --> 2
+      f.data.c = 3;
+      f.finish();
+    });
+
+    var data_1 = {a: 1};
+    var data_2 = {b: 2};
+    my_flow.run('multi-merge', data_1, data_2);
+    data_1 // --> { a: 1, b: 2, c: 3}
 
 
 
