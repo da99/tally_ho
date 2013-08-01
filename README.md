@@ -16,6 +16,12 @@ Not ready for use yet.
 If you're adventurous
 =====================
 
+It combines (event emitter + async-like) functionality.
+
+After you call `.finish` in a callback, the next
+event callback is run. In other words: a waterfall
+pattern.
+
 
 App level
 ---------------------
@@ -27,6 +33,11 @@ App level
       My_DB.read({...}, function (err, val) {
         flow.finish(val);
       });
+    });
+
+    F.on("read Bot", function(flow) {
+      console.log(flow.last);
+      flow.finish();
     });
 
     F.on("before read Bot", function(flow) {
