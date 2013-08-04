@@ -5,6 +5,14 @@ var _      = require("underscore")._
 ;
 
 
+describe( '.prepend', function () {
+
+  it( 'prepends arguments to .includes', function () {
+    One.prepend(Two);
+    assert.equal(_.first(One.includes), Two);
+  });
+
+}); // === end desc
 
 describe( '.append', function () {
 
