@@ -24,7 +24,7 @@ T.on('mult', 'div', function (o) {
 
 describe( '.run', function () {
 
-  it( 'prepends arguments to .includes', function () {
+  it( 'prepends arguments in specified order to .includes', function () {
     var t1 = Tally_Ho.new();
     t1._val = 1;
 
@@ -34,6 +34,12 @@ describe( '.run', function () {
     var t3 = Tally_Ho.new(t1, t2);
     assert.equal(t3.includes[0]._val, t1._val);
     assert.equal(t3.includes[1]._val, t2._val);
+  });
+
+  it( 'filters out duplicates among arguments in .includes', function () {
+    var t1 = Tally_Ho.new();
+    var t2 = Tally_Ho.new(t1, t1, t1);
+    assert.equal(t2.includes.length, 2);
   });
 
   it( 'runs events in defined order', function (done) {

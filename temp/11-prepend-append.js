@@ -12,6 +12,11 @@ describe( '.prepend', function () {
     assert.equal(_.first(One.includes), Two);
   });
 
+  it( 'removes duplicates', function () {
+    var l = One.includes.length;
+    One.prepend(Two, Two);
+    assert.equal(One.includes.length, l);
+  });
 }); // === end desc
 
 describe( '.append', function () {
@@ -19,6 +24,12 @@ describe( '.append', function () {
   it( 'appends arguments to .includes', function () {
     One.append(Two);
     assert.equal(_.last(One.includes), Two);
+  });
+
+  it( 'removes duplicates', function () {
+    var l = One.includes.length;
+    One.append(Two, Two);
+    assert.equal(One.includes.length, l);
   });
 
 }); // === end desc
