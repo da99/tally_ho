@@ -101,6 +101,23 @@ describe( '.run .includes', function () {
     assert.deepEqual(o, {vals: [1,3,2,4]});
   });
 
+  it( 'runs events in .includes of the .includes', function () {
+    var t1 = Tally_Ho.new();
+    t1.on('add', function (f) { f.data.vals.push(1); f.finish(); });
+
+    var t2 = Tally_Ho.new(t1);
+    t2.on('add', function (f) { f.data.vals.push(2); f.finish(); });
+
+    var t3 = Tally_Ho.new(t2);
+    t3.on('add', function (f) { f.data.vals.push(3); f.finish(); });
+
+    var t4 = Tally_Ho.new(t3);
+    t4.on('add', function (f) { f.data.vals.push(4); f.finish(); });
+
+    var o = {vals: []};
+    t4.run('add', o);
+    assert.deepEqual(o, {vals: [1,2,3,4]});
+  });
 }); // === end desc
 
 
