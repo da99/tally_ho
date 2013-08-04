@@ -1,38 +1,52 @@
 
-var _        = require("underscore")._
-  , assert   = require("assert")
-  , Tally_Ho = require("../lib/tally_ho").Tally_Ho.new()
-  , Ho       = require("../lib/tally_ho").Tally_Ho.new()
+var _      = require("underscore")._
+  , assert = require("assert")
+  , One    = require("../lib/tally_ho").Tally_Ho.new()
+  , Ho     = require("../lib/tally_ho").Tally_Ho.new()
 ;
 
-Tally_Ho.on_error('not_found', function (o, err) {
+One.on('not_found', function (o, err) {
   o.data.result.push(err);
 });
 
-Tally_Ho.on('subtract', function (o) {
+One.on('subtract', function (o) {
   o.finish('not_found', 1);
 });
 
-Tally_Ho.on('raise nested err', function (o) {
+One.on('raise nested err', function (o) {
   Ho.run(o, 'nested', {});
+});
+
+One.on('error not found', function (o) {
+  o.finish('made up error', 1);
 });
 
 Ho.on('nested', function (o) {
   o.finish('not_found', 2);
 });
 
-describe( '.on_error', function () {
+describe( 'error handling', function () {
 
   it( 'runs error handler', function () {
     var o = {result: []};
-    Tally_Ho.run('subtract', o);
-    assert.deepEqual( o.result, [1]);
+    One.run('subtract', o);
+    assert.deepEqual( o.error, 1);
   });
 
   it( 'catches errors bubbled up from nested flows', function () {
     var o = {result: []};
-    Tally_Ho.run('raise nested err', o);
-    assert.deepEqual( o.result, [2]);
+    One.run('raise nested err', o);
+    assert.deepEqual( o.error, 2);
   });
 
+  it( 'raises error if no error handlers found', function () {
+    var err = null;
+    try {
+      One.run('error not found');
+    } catch(e) {
+      err = e;
+    }
+
+    assert.equal(err.message, "Error handlers not found for: made up error");
+  });
 }); // === end desc
