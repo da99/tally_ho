@@ -6,9 +6,11 @@ var _      = require("underscore")._
 
 
 
-describe( '.prepend', function () {
+describe( '.append', function () {
 
-  it( '', function () {
-  
+  it( 'appends arguments to .includes', function () {
+    One.append(Two);
+    assert.equal(_.last(One.includes), Two);
   });
+
 }); // === end desc
