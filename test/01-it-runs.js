@@ -1,21 +1,22 @@
 
-var _        = require("underscore")._
-  , assert   = require("assert")
-  , Tally_Ho = require("../lib/tally_ho").Tally_Ho.new()
-  , F        = require("../lib/tally_ho").Tally_Ho.new()
+var _      = require("underscore")._
+  , assert = require("assert")
+  , Tally_Ho=require("../lib/tally_ho").Tally_Ho
+  , T      = require("../lib/tally_ho").Tally_Ho.new()
+  , F      = require("../lib/tally_ho").Tally_Ho.new()
 ;
 
-Tally_Ho.on('add', function (o) {
+T.on('add', function (o) {
   o.data.result.push(1);
   o.finish();
 });
 
-Tally_Ho.on('add', function (o) {
+T.on('add', function (o) {
   o.data.result.push(2);
   o.finish();
 });
 
-Tally_Ho.on('mult', 'div', function (o) {
+T.on('mult', 'div', function (o) {
   o.data.result.push(o.run.proc_list[0]);
   o.finish();
 });
@@ -23,9 +24,21 @@ Tally_Ho.on('mult', 'div', function (o) {
 
 describe( '.run', function () {
 
+  it( 'prepends arguments to .includes', function () {
+    var t1 = Tally_Ho.new();
+    t1._val = 1;
+
+    var t2 = Tally_Ho.new();
+    t2._val = 2;
+
+    var t3 = Tally_Ho.new(t1, t2);
+    assert.equal(t3.includes[0]._val, t1._val);
+    assert.equal(t3.includes[1]._val, t2._val);
+  });
+
   it( 'runs events in defined order', function (done) {
     process.nextTick(function () {
-      Tally_Ho.run('add', {result: []}, function (o) {
+      T.run('add', {result: []}, function (o) {
         assert.deepEqual( o.data.result, [1,2]);
         done();
       })
@@ -34,11 +47,11 @@ describe( '.run', function () {
 
   it( 'runs on multi-defined events', function (done) {
     process.nextTick(function () {
-      Tally_Ho.run('mult', {result: []}, function (o) {
+      T.run('mult', {result: []}, function (o) {
         assert.deepEqual( o.data.result, ['mult']);
       })
 
-      Tally_Ho.run('div', {result: []}, function (o) {
+      T.run('div', {result: []}, function (o) {
         assert.deepEqual( o.data.result, ['div']);
         done();
       })
