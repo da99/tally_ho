@@ -94,6 +94,14 @@ describe( '.run', function () {
     assert.deepEqual(o, {vals: [1]});
   });
 
+  it( 'passes last value as second argument to callbacks', function () {
+    var last = null;
+    T.on('a', function (f) { f.finish(1); });
+    T.on('a', function (f, l) { last = l;  });
+    T.run('a');
+
+    assert.equal(last, 1);
+  });
 
 }); // === end desc
 
