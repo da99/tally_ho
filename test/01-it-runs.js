@@ -64,6 +64,37 @@ describe( '.run', function () {
     assert.deepEqual(o, {zero: 0, one: 1, two: 'b', three: 'c'});
   });
 
+  it( 'squeezes spaces in event names upon .on and .run', function () {
+    T.on('spaced    NAME', function (f) {
+      f.data.vals.push(1);
+    });
+
+    var o = {vals: []}
+    T.run('spaced          NAME', o);
+    assert.deepEqual(o, {vals: [1]});
+  });
+
+  it( 'ignores capitalization of event name upon .on and .run', function () {
+    T.on('strange CAPS', function (f) {
+      f.data.vals.push(1);
+    });
+
+    var o = {vals: []}
+    T.run('STRANGE CApS', o);
+    assert.deepEqual(o, {vals: [1]});
+  });
+
+  it( 'ignores surrounding spaces of event name upon .on and .run', function () {
+    T.on('  non-trim NAME  ', function (f) {
+      f.data.vals.push(1);
+    });
+
+    var o = {vals: []}
+    T.run('non-trim   NAME', o);
+    assert.deepEqual(o, {vals: [1]});
+  });
+
+
 }); // === end desc
 
 
